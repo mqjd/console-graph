@@ -3,6 +3,7 @@ package org.mqjd.common;
 public class SpecialCharacter {
     public static final String TOP_SINGLE_LINE_HORIZONTAL = "¯";
     public static final String MIDDLE_SINGLE_LINE = "—";
+    public static final String MIDDLE_SINGLE_LINE_VERTICAL = "|";
     public static final String MIDDLE_DOUBLE_LINE = "═";
     public static final String MIDDLE_DOUBLE_LINE_VERTICAL = "║";
     public static final String BOTTOM_SINGLE_LINE = "_";
@@ -25,4 +26,29 @@ public class SpecialCharacter {
     public static final String CHARACTER17 = "╩";
     public static final String CHARACTER18 = "╣";
     public static final String CHARACTER19 = "╬";
+
+
+    public static final String CHARACTER21 = "\\";
+    public static final String CHARACTER22 = "/";
+    public static final String CHARACTER23 = "⁀";
+    public static final String CHARACTER24 = "‿";
+    public static final String CHARACTER25 = "⁔";
+    public static final String CHARACTER26 = "（";
+    public static final String CHARACTER27 = "）";
+    public static final String CHARACTER28 = "◯";
+    public static final String CHARACTER29 = "●";
+
+    public static final String CHARACTER41 = "▲";
+    public static final String CHARACTER42 = "◀";
+    public static final String CHARACTER43 = "▼";
+    public static final String CHARACTER44 = "▶";
+    public static final String CHARACTER45 = "◤";
+    public static final String CHARACTER46 = "◣";
+    public static final String CHARACTER47 = "◢";
+    public static final String CHARACTER48 = "◥";
+
+    public static final String CHARACTER51 = "◸";
+    public static final String CHARACTER52 = "◺";
+    public static final String CHARACTER53 = "◿";
+    public static final String CHARACTER54 = "◹";
 }
