@@ -2,7 +2,7 @@ package org.mqjd.common;
 
 public class SpecialCharacter {
     public static final String TOP_SINGLE_LINE_HORIZONTAL = "¯";
-    public static final String MIDDLE_SINGLE_LINE = "—";
+    public static final String MIDDLE_SINGLE_LINE = "-";
     public static final String MIDDLE_SINGLE_LINE_VERTICAL = "|";
     public static final String MIDDLE_DOUBLE_LINE = "═";
     public static final String MIDDLE_DOUBLE_LINE_VERTICAL = "║";
@@ -33,8 +33,8 @@ public class SpecialCharacter {
     public static final String CHARACTER23 = "⁀";
     public static final String CHARACTER24 = "‿";
     public static final String CHARACTER25 = "⁔";
-    public static final String CHARACTER26 = "（";
-    public static final String CHARACTER27 = "）";
+    public static final String CHARACTER26 = "(";
+    public static final String CHARACTER27 = ")";
     public static final String CHARACTER28 = "◯";
     public static final String CHARACTER29 = "●";
 

@@ -35,7 +35,14 @@ public class Rect implements Component {
     @Override
     public void draw() {
         String topEdge = String.format("%s%s%s", borderStyle.getNorthwest(), IntStream.range(0, size.getWidth() - 1)
-            .mapToObj(v -> "").collect(Collectors.joining(borderStyle.getHorizontal())), borderStyle.getNortheast());
-        graphics.draw(point,topEdge, color);
+                .mapToObj(v -> "").collect(Collectors.joining(borderStyle.getHorizontal())), borderStyle.getNortheast());
+        String bottomEdge = String.format("%s%s%s", borderStyle.getSouthwest(), IntStream.range(0, size.getWidth() - 1)
+                .mapToObj(v -> "").collect(Collectors.joining(borderStyle.getHorizontal())), borderStyle.getSoutheast());
+        graphics.draw(point, topEdge, color);
+        for (int i = 1; i < size.getHeight() - 1; i++) {
+            graphics.draw(Point.of(point.getX(), i + point.getY()), borderStyle.getVertical(), color);
+            graphics.draw(Point.of(point.getX() + size.getWidth(), i + point.getY()), borderStyle.getVertical(), color);
+        }
+        graphics.draw(Point.of(point.getX() , point.getY() + size.getHeight() - 1), bottomEdge, color);
     }
 }
