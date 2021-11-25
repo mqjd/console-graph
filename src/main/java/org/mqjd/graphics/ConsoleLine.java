@@ -1,7 +1,6 @@
 package org.mqjd.graphics;
 
-import org.fusesource.jansi.Ansi;
-import org.mqjd.component.Component;
+import static org.fusesource.jansi.Ansi.ansi;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -9,16 +8,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.fusesource.jansi.Ansi.ansi;
+import org.fusesource.jansi.Ansi;
+import org.mqjd.component.Component;
 
 public class ConsoleLine implements Component {
     private int length;
     private final List<Text> texts = new ArrayList<>();
-
-    public void add(Text text) {
-        texts.add(text);
-        length = Math.max(text.getPosition() + text.getLength(), length);
-    }
 
     public int getLength() {
         return length;
@@ -28,27 +23,35 @@ public class ConsoleLine implements Component {
     public void draw() {
         texts.sort(Comparator.comparingInt(Text::getPosition));
         Ansi ansi = ansi().eraseScreen();
-        int position = -1;
-        int textLength;
+        int position = 0;
         for (Text text : texts) {
-            textLength = text.getLength();
-            int space = text.getPosition() - position - 1;
-            if (space > 0) {
-                ansi.a(IntStream.range(0, space).mapToObj(v -> " ").collect(Collectors.joining()));
+            int space = text.getPosition() - position;
+            if (space > 1) {
+                ansi.fg(text.getColor().getColor())
+                    .a(IntStream.range(0, space - 1).mapToObj(v -> " ").collect(Collectors.joining()));
                 ansi.fg(text.getColor().getColor()).a(text.getText());
-            } else if (space < 0) {
-                Text newText = text.cut(-1 - space);
-                textLength = newText.getLength();
+                position = text.getPosition() + text.getLength() - 1;
+            } else if (space < 1) {
+                Text newText = text.cut(1 - space);
                 ansi.fg(newText.getColor().getColor()).a(newText.getText());
+                int newTextLength = newText.getLength();
+                if (newTextLength > 0) {
+                    position = position + newText.getLength();
+                }
             } else {
                 ansi.fg(text.getColor().getColor()).a(text.getText());
+                position = text.getPosition() + text.getLength() - 1;
             }
-            position = text.getPosition() + textLength;
         }
         System.out.println(ansi);
     }
 
     public static void drawEmpty() {
         System.out.println();
+    }
+
+    public void add(Text text) {
+        texts.add(text);
+        length = Math.max(text.getPoint().getX() + text.getLength(), length);
     }
 }

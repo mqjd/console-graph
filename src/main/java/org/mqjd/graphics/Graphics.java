@@ -3,8 +3,6 @@ package org.mqjd.graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mqjd.common.Color;
-import org.mqjd.common.Point;
 import org.mqjd.component.Component;
 
 public class Graphics {
@@ -22,7 +20,7 @@ public class Graphics {
         meta.draw();
     }
 
-    public void draw(Point point, String text, Color color) {
-        meta.add(point, text, color);
+    public void draw(Text text) {
+        meta.add(text);
     }
 }
