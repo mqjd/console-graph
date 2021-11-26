@@ -3,9 +3,11 @@ package org.mqjd.graphics;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.mqjd.component.Component;
+import org.mqjd.common.BoundingRect;
+import org.mqjd.element.Drawer;
+import org.mqjd.element.Text;
 
-public class Console implements Component {
+public class ConsolePrinter implements Drawer {
 
     private final Map<Integer, ConsoleLine> lines = new HashMap<>();
     private int maxRows = 0;
@@ -25,8 +27,8 @@ public class Console implements Component {
     }
 
     public void add(Text text) {
-
-        lines.compute(text.getPoint().getY(), (k, v) -> {
+        BoundingRect boundingRect = text.getBoundingRect();
+        lines.compute(boundingRect.getY(), (k, v) -> {
             ConsoleLine consoleLine = v;
             if (consoleLine == null) {
                 consoleLine = new ConsoleLine();
@@ -34,6 +36,6 @@ public class Console implements Component {
             consoleLine.add(text);
             return consoleLine;
         });
-        maxRows = Math.max(maxRows, text.getPoint().getY());
+        maxRows = Math.max(maxRows, boundingRect.getY());
     }
 }

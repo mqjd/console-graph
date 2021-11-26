@@ -1,5 +1,9 @@
 package org.mqjd.common;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 public class SpecialCharacter {
     public static final String TOP_SINGLE_LINE_HORIZONTAL = "¯";
     public static final String MIDDLE_SINGLE_LINE = "-";
@@ -51,4 +55,19 @@ public class SpecialCharacter {
     public static final String CHARACTER52 = "◺";
     public static final String CHARACTER53 = "◿";
     public static final String CHARACTER54 = "◹";
+
+    public static Map<MixinKey, String> mixins = new HashMap<>();
+
+    static {
+        mixins.put(MixinKey.of(CHARACTER1, CHARACTER2), CHARACTER6);
+        mixins.put(MixinKey.of(CHARACTER1, CHARACTER3), CHARACTER9);
+        mixins.put(MixinKey.of(CHARACTER2, CHARACTER3), CHARACTER7);
+        mixins.put(MixinKey.of(CHARACTER1, CHARACTER4), CHARACTER5);
+        mixins.put(MixinKey.of(CHARACTER2, CHARACTER4), CHARACTER9);
+        mixins.put(MixinKey.of(CHARACTER3, CHARACTER4), CHARACTER8);
+    }
+
+    public static Optional<String> conflictDetect(String s1, String s2) {
+        return Optional.ofNullable(mixins.get(MixinKey.of(s1, s2)));
+    }
 }

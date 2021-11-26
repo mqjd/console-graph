@@ -3,20 +3,21 @@ package org.mqjd.graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.mqjd.component.Component;
+import org.mqjd.element.Element;
+import org.mqjd.element.Text;
 
 public class Graphics {
 
-    private final Console meta = new Console();
-    private final List<Component> components = new ArrayList<>();
+    private final ConsolePrinter meta = new ConsolePrinter();
+    private final List<Element> components = new ArrayList<>();
 
-    public Graphics add(Component component) {
+    public Graphics add(Element component) {
         components.add(component);
         return this;
     }
 
     public void draw() {
-        components.forEach(Component::draw);
+        components.forEach(Element::draw);
         meta.draw();
     }
 

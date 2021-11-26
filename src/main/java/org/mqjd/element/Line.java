@@ -1,15 +1,12 @@
-package org.mqjd.component;
+package org.mqjd.element;
 
-import org.mqjd.common.Color;
-import org.mqjd.common.LineStyle;
-import org.mqjd.common.Point;
+import org.mqjd.common.*;
 import org.mqjd.graphics.Graphics;
-import org.mqjd.graphics.Text;
 
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Line implements Component {
+public class Line implements Element {
     private final int length;
     private final Graphics graphics;
     private final LineStyle lineStyle;
@@ -34,8 +31,13 @@ public class Line implements Component {
 
     @Override
     public void draw() {
-        graphics.draw(new Text(point,
-            IntStream.range(0, length + 1).mapToObj(v -> "").collect(Collectors.joining(lineStyle.getText())), color));
+        graphics.draw(new Text(graphics,point,
+                IntStream.range(0, length).mapToObj(v -> lineStyle.getText()).collect(Collectors.joining()), color));
+    }
+
+    @Override
+    public BoundingRect getBoundingRect() {
+        return new BoundingRect(point, Size.of(length, 1));
     }
 
 }

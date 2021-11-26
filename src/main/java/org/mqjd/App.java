@@ -2,7 +2,7 @@ package org.mqjd;
 
 import org.mqjd.common.Point;
 import org.mqjd.common.Size;
-import org.mqjd.component.Rect;
+import org.mqjd.element.Rect;
 import org.mqjd.graphics.Graphics;
 
 /**
