@@ -8,7 +8,7 @@ import org.mqjd.element.Text;
 
 public class Graphics {
 
-    private final ConsolePrinter meta = new ConsolePrinter();
+    private final ConsolePrinter meta = new ConsolePrinter(this);
     private final List<Element> components = new ArrayList<>();
 
     public Graphics add(Element component) {

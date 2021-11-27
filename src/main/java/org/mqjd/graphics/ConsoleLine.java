@@ -2,12 +2,14 @@ package org.mqjd.graphics;
 
 import org.fusesource.jansi.Ansi;
 import org.mqjd.common.BoundingRect;
+import org.mqjd.common.Point;
+import org.mqjd.common.SpecialCharacter;
+import org.mqjd.element.Border;
 import org.mqjd.element.Drawer;
 import org.mqjd.element.Text;
+import org.mqjd.utils.StringUtil;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -16,36 +18,50 @@ import static org.fusesource.jansi.Ansi.ansi;
 public class ConsoleLine implements Drawer {
     private int length;
     private final List<Text> texts = new ArrayList<>();
+    private final Graphics graphics;
+
+    public ConsoleLine(Graphics graphics) {
+        this.graphics = graphics;
+    }
 
     @Override
     public void draw() {
         texts.sort(Comparator.comparingInt(Text::getPosition));
-        List<ConsoleText> consoleTexts = new ArrayList<>();
+        List<Text> texts = new ArrayList<>();
         int position = 0;
-        for (Text text : texts) {
+        for (Text text : this.texts) {
             int space = text.getPosition() - position;
             if (space > 1) {
-                consoleTexts.add(ConsoleText.of(IntStream.range(0, space - 1).mapToObj(v -> " ").collect(Collectors.joining()), text.getColor()));
-                consoleTexts.add(ConsoleText.of(text.getText(), text.getColor()));
+                texts.add(new Text(graphics, Point.of(position + 1, text.getPoint().getY()), IntStream.range(0, space - 1).mapToObj(v -> " ").collect(Collectors.joining()), text.getColor()));
+                texts.add(text);
                 position = text.getPosition() + text.getLength() - 1;
             } else if (space < 1) {
-                Text newText = text.cut(1 - space);
-                int newTextLength = newText.getLength();
-                if (newTextLength > 0) {
-                    consoleTexts.add(ConsoleText.of(newText.getText(), newText.getColor()));
-                    position = position + newText.getLength();
+                Text text1 = texts.get(texts.size() - 1);
+                if (text1.mergeable(text)) {
+                    Border merge = text1.merge(text);
+                    texts.remove(texts.size() - 1);
+                    texts.add(merge);
+                    position = merge.getPosition() + merge.getLength() - 1;
+                } else {
+                    Text newText = text.cut(1 - space);
+                    int newTextLength = newText.getLength();
+                    if (newTextLength > 0) {
+                        texts.add(newText);
+                        position = position + newText.getLength();
+                    }
                 }
             } else {
-                consoleTexts.add(ConsoleText.of(text.getText(), text.getColor()));
+                texts.add(text);
                 position = text.getPosition() + text.getLength() - 1;
             }
         }
         Ansi ansi = ansi().eraseScreen();
-        for (ConsoleText consoleText : consoleTexts) {
-            ansi.fg(consoleText.getColor().getColor()).a(consoleText.getText());
+        for (Text text : texts) {
+            ansi.fg(text.getColor().getColor()).a(text.getText());
         }
         System.out.println(ansi);
     }
+
 
     public static void drawEmpty() {
         System.out.println();

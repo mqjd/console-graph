@@ -7,6 +7,10 @@ import org.mqjd.common.Size;
 import org.mqjd.graphics.Graphics;
 import org.mqjd.utils.StringUtil;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Text implements Element {
     private final Graphics graphics;
     private final Point point;
@@ -28,7 +32,7 @@ public class Text implements Element {
 
     @Override
     public void draw() {
-
+        graphics.draw(this);
     }
 
     public int getLength() {
@@ -54,6 +58,14 @@ public class Text implements Element {
     @Override
     public BoundingRect getBoundingRect() {
         return new BoundingRect(point, Size.of(StringUtil.getStringWidth(text), 1));
+    }
+
+    public boolean mergeable(Element element) {
+        return false;
+    }
+
+    public Border merge(Element element) {
+        throw new IllegalArgumentException("Text can not merge other element");
     }
 
     public Text cut(int length) {

@@ -11,10 +11,15 @@ public class ConsolePrinter implements Drawer {
 
     private final Map<Integer, ConsoleLine> lines = new HashMap<>();
     private int maxRows = 0;
+    private final Graphics graphics;
+
+    public ConsolePrinter(Graphics graphics) {
+        this.graphics = graphics;
+    }
 
     @Override
     public void draw() {
-        for (int i = 0; i <= maxRows; i++) {
+        for (int i = 1; i <= maxRows; i++) {
             lines.compute(i, (key, value) -> {
                 if (value != null) {
                     value.draw();
@@ -31,7 +36,7 @@ public class ConsolePrinter implements Drawer {
         lines.compute(boundingRect.getY(), (k, v) -> {
             ConsoleLine consoleLine = v;
             if (consoleLine == null) {
-                consoleLine = new ConsoleLine();
+                consoleLine = new ConsoleLine(graphics);
             }
             consoleLine.add(text);
             return consoleLine;

@@ -11,7 +11,12 @@ import org.mqjd.graphics.Graphics;
 public class App {
     public static void main(String[] args) {
         Graphics graphics = new Graphics();
-        graphics.add(new Rect(graphics, Point.of(10, 6), Size.of(10, 4)))
-            .add(new Rect(graphics, Point.of(18, 6), Size.of(10, 4))).draw();
+        graphics.add(new Rect(graphics, Point.of(10, 2), Size.of(10, 4)))
+                .add(new Rect(graphics, Point.of(14, 4), Size.of(10, 4)))
+                .add(new Rect(graphics, Point.of(16, 6), Size.of(10, 4)))
+                .add(new Rect(graphics, Point.of(18, 8), Size.of(10, 4)))
+                .add(new Rect(graphics, Point.of(22, 4), Size.of(10, 4)))
+                .add(new Rect(graphics, Point.of(22, 6), Size.of(10, 4)))
+                .draw();
     }
 }
