@@ -32,16 +32,18 @@ public class Rect implements Element {
     @Override
     public void draw() {
         String topEdge = String.format("%s%s%s", borderStyle.getNorthwest(), IntStream.range(0, size.getWidth() - 1)
-                .mapToObj(v -> "").collect(Collectors.joining(borderStyle.getHorizontal())), borderStyle.getNortheast());
+            .mapToObj(v -> "").collect(Collectors.joining(borderStyle.getHorizontal())), borderStyle.getNortheast());
         String bottomEdge = String.format("%s%s%s", borderStyle.getSouthwest(), IntStream.range(0, size.getWidth() - 1)
-                .mapToObj(v -> "").collect(Collectors.joining(borderStyle.getHorizontal())), borderStyle.getSoutheast());
+            .mapToObj(v -> "").collect(Collectors.joining(borderStyle.getHorizontal())), borderStyle.getSoutheast());
         graphics.draw(new Border(graphics, point, topEdge, color));
         for (int i = 1; i < size.getHeight() - 1; i++) {
-            graphics.draw(new Border(graphics, Point.of(point.getX(), i + point.getY()), borderStyle.getVertical(), color));
+            graphics
+                .draw(new Border(graphics, Point.of(point.getX(), i + point.getY()), borderStyle.getVertical(), color));
             graphics.draw(new Border(graphics, Point.of(point.getX() + size.getWidth() - 1, i + point.getY()),
-                    borderStyle.getVertical(), color));
+                borderStyle.getVertical(), color));
         }
-        graphics.draw(new Border(graphics, Point.of(point.getX(), point.getY() + size.getHeight() - 1), bottomEdge, color));
+        graphics
+            .draw(new Border(graphics, Point.of(point.getX(), point.getY() + size.getHeight() - 1), bottomEdge, color));
     }
 
     @Override

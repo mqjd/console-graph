@@ -60,12 +60,12 @@ public class Text implements Element {
         return new BoundingRect(point, Size.of(StringUtil.getStringWidth(text), 1));
     }
 
-    public boolean mergeable(Element element) {
+    public boolean mixable(Element element) {
         return false;
     }
 
-    public Border merge(Element element) {
-        throw new IllegalArgumentException("Text can not merge other element");
+    public Border mix(Element element) {
+        throw new IllegalArgumentException("Text can not mix other element");
     }
 
     public Text cut(int length) {

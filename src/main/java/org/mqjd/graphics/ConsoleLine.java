@@ -3,11 +3,9 @@ package org.mqjd.graphics;
 import org.fusesource.jansi.Ansi;
 import org.mqjd.common.BoundingRect;
 import org.mqjd.common.Point;
-import org.mqjd.common.SpecialCharacter;
 import org.mqjd.element.Border;
 import org.mqjd.element.Drawer;
 import org.mqjd.element.Text;
-import org.mqjd.utils.StringUtil;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -32,16 +30,17 @@ public class ConsoleLine implements Drawer {
         for (Text text : this.texts) {
             int space = text.getPosition() - position;
             if (space > 1) {
-                texts.add(new Text(graphics, Point.of(position + 1, text.getPoint().getY()), IntStream.range(0, space - 1).mapToObj(v -> " ").collect(Collectors.joining()), text.getColor()));
+                texts.add(new Text(graphics, Point.of(position + 1, text.getPoint().getY()),
+                    IntStream.range(0, space - 1).mapToObj(v -> " ").collect(Collectors.joining()), text.getColor()));
                 texts.add(text);
                 position = text.getPosition() + text.getLength() - 1;
             } else if (space < 1) {
                 Text text1 = texts.get(texts.size() - 1);
-                if (text1.mergeable(text)) {
-                    Border merge = text1.merge(text);
+                if (text1.mixable(text)) {
+                    Border mix = text1.mix(text);
                     texts.remove(texts.size() - 1);
-                    texts.add(merge);
-                    position = merge.getPosition() + merge.getLength() - 1;
+                    texts.add(mix);
+                    position = mix.getPosition() + mix.getLength() - 1;
                 } else {
                     Text newText = text.cut(1 - space);
                     int newTextLength = newText.getLength();
@@ -61,7 +60,6 @@ public class ConsoleLine implements Drawer {
         }
         System.out.println(ansi);
     }
-
 
     public static void drawEmpty() {
         System.out.println();

@@ -1,5 +1,6 @@
 package org.mqjd.element;
 
+import org.mqjd.common.CharacterMixin;
 import org.mqjd.common.Color;
 import org.mqjd.common.Point;
 import org.mqjd.common.SpecialCharacter;
@@ -14,16 +15,16 @@ public class Border extends Text {
     }
 
     @Override
-    public boolean mergeable(Element element) {
+    public boolean mixable(Element element) {
         return element instanceof Border;
     }
 
     @Override
-    public Border merge(Element element) {
+    public Border mix(Element element) {
         if (!(element instanceof Border)) {
             throw new IllegalArgumentException("element type must be Border");
         }
-        Border border = (Border) element;
+        Border border = (Border)element;
         int start = Math.min(getPosition(), border.getPosition());
         int end = Math.max(getPosition() + getText().length(), border.getPosition() + border.getText().length());
         StringBuilder result = new StringBuilder();
@@ -38,10 +39,11 @@ public class Border extends Text {
             throw new IllegalArgumentException("argument is not valid");
         }
         if (a != null && b != null) {
-            return SpecialCharacter.merge(a, b).orElseThrow(() -> new IllegalArgumentException("argument is not valid"));
+            return CharacterMixin.mix(a, b).orElseThrow(() -> new IllegalArgumentException("argument is not valid"));
         }
 
-        if (a != null) return a;
+        if (a != null)
+            return a;
         return b;
     }
 
@@ -53,7 +55,6 @@ public class Border extends Text {
         }
 
     }
-
 
     @Override
     public Border cut(int length) {
