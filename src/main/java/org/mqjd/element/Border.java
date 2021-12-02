@@ -3,11 +3,8 @@ package org.mqjd.element;
 import org.mqjd.common.CharacterMixin;
 import org.mqjd.common.Color;
 import org.mqjd.common.Point;
-import org.mqjd.common.SpecialCharacter;
 import org.mqjd.graphics.Graphics;
 import org.mqjd.utils.StringUtil;
-
-import java.util.Optional;
 
 public class Border extends Text {
     public Border(Graphics graphics, Point point, String text, Color color) {

@@ -7,10 +7,6 @@ import org.mqjd.common.Size;
 import org.mqjd.graphics.Graphics;
 import org.mqjd.utils.StringUtil;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public class Text implements Element {
     private final Graphics graphics;
     private final Point point;
